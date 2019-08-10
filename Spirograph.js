@@ -33,7 +33,7 @@ let param1 = 1.3;
 let param2 = 2;
 let param3 = 1;
 let param4 = 1;
-let sweepIncrement=0.001;
+let sweepIncrement = 0.001;
 
 function setup() {
     cv = createCanvas(600, 600);
@@ -119,25 +119,28 @@ function ReadInputValues() {
 function keyPressed() {
 
     if ((key == "f" || key == "F") && keyCode !== 102) {
-        param1 = random(0.7, 1.3);
-        param2 = random(1.6, 6);
-        param3 = random();
-        if (param3 > 0.5) {
-            param3 = 1;
-        } else {
-            param3 = -1;
-        }
-
-        for (let k = 0; k < 2; k++) {
-            
-             offsets_Inputs[k].value=0;
-            
-        }
-        //GenerateRandomSpirographPattern(-2, 60);
-        //InitObjects();
+        randomizeParams();
     }
 }
 
+function doubleClicked() {
+    randomizeParams();
+}
+
+function randomizeParams(){
+    param1 = random(0.7, 1.3);
+    param2 = random(1.6, 6);
+    param3 = random();
+    if (param3 > 0.5) {
+        param3 = 1;
+    } else {
+        param3 = -1;
+    }
+    for (let k = 0; k < 2; k++) {
+        offsets_Inputs[k].value = 0;
+    }
+    sweep=0.1;
+}
 function draw() {
 
 
@@ -147,25 +150,20 @@ function draw() {
         animresolution = map(AnimSpeedSlider.value, 1, 100, 10, 1);
         // lblX.innerHTML = "sum of revs of end planet: " + end.getSumOfRevolutions();
         // lblX.innerHTML += "</br> TotalSteps of end planet: " + OrbitResolution * end.getSumOfRevolutions();
-        GenerateRandomSpirographPattern(1.2+sweep, 60);
-        sweepIncrement = map(SweepSlider.value, 0, 100, -0.005, 0.005);
-        sweep+=sweepIncrement;
+        GenerateRandomSpirographPattern(1.3 + sweep, 60);       
         InitObjects();
         background(33);
-
         CalcPath();
-        displayVertexShape();
-        var next = sun;
-        while (next != null) {
-            //next.show();
-            next = next.child;
-        }
+        displayVertexShape();        
         //drawMe = false;
     }
+
+    sweepIncrement = map(SweepSlider.value, 0, 100, -0.0005, 0.0005);
+    sweep += sweepIncrement;
+
     if (animation) {
         Animate();
         lblX.innerHTML += "</br> TotalSteps of end planet: " + OrbitResolution * end.getSumOfRevolutions();
-
     }
     // lblInfo.innerHTML = stepCounterLimit + "------path.length: " + path.length;
     // lblInfo.innerHTML += "</br> Orbitres: " + OrbitResolution;

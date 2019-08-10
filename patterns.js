@@ -18,9 +18,4 @@ function GenerateRandomSpirographPattern(q, r) {
     //         }
     //     }, 1)) < 2);
 
-    for (let k = 0; k < 2; k++) {
-        revs_Inputs[k].value = arr_revs[k + 1];
-        offsets_Inputs[k].value = arr_radoffset[k + 1];
-        radius_Inputs[k].value = arr_radius[k + 1];
-    }
 }
