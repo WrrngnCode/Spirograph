@@ -1,0 +1,23 @@
+{
+  "name": "spirograph",
+  "version": "1.0.0",
+  "description": "Interactive Spirograph",
+  "main": "Spirograph.js",
+  "dependencies": {
+    "p5": "^0.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WrrngnCode/Spirograph.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WrrngnCode/Spirograph/issues"
+  },
+  "homepage": "https://github.com/WrrngnCode/Spirograph#readme"
+}
