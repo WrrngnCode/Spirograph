@@ -19,10 +19,6 @@ function Orbit(x_, y_, r_, p, r_offset_, revs_, n) {
         var newx = this.x; //+ this.r + newr;
         var newy = this.y + this.r;
         this.child = new Orbit(newx, newy, newr, this, childr_offset_, parseFloat(childrevs_), n + 1);
-        //var inc = this.child.getSumOfRevolutions() / OrbitResolution / animresolution;
-        //this.child.angleIncr = inc;
-        //lblY.innerHTML = this.child.angleIncr;
-
         return this.child;
     }
 
@@ -33,16 +29,6 @@ function Orbit(x_, y_, r_, p, r_offset_, revs_, n) {
             return this.RevsAroundParent;
         }
     }
-
-    // this.update = function() {
-    //     var parent = this.parent;
-    //     if (parent != null) {
-    //         this.angle += this.angleIncr;
-    //         var rsum = this.r + parent.r + this.r_offset;
-    //         this.x = parent.x + rsum * cos(this.angle);
-    //         this.y = parent.y + rsum * sin(this.angle);
-    //     }
-    // }
 
     this.SetOrbitPosition = function() {
         var parent = this.parent;
@@ -64,20 +50,3 @@ function Orbit(x_, y_, r_, p, r_offset_, revs_, n) {
     }
 }
 Orbit.prototype.time = 0;
-
-// Orbit.prototype.GetMyAngleIncr = function(res) {
-//     let incr = TWO_PI / res;
-//     this.angleIncr = incr;
-//     if (this.parent != null) {
-//         this.UpdateMyParentsAngleIncr(this.RevsAroundParent, incr);
-//     }
-//     return incr;
-// }
-
-// Orbit.prototype.UpdateMyParentsAngleIncr = function(childrevs, childangleIncr) {
-//     let parentAngleIncr = parseFloat(childangleIncr) / parseFloat(childrevs);
-//     this.parent.angleIncr = parentAngleIncr;
-//     if (this.parent.parent != null) {
-//         this.parent.UpdateMyParentsAngleIncr(this.parent.RevsAroundParent, parentAngleIncr);
-//     }
-// }
