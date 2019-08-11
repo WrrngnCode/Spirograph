@@ -34,6 +34,8 @@ let param2 = 2;
 let param3 = 1;
 let param4 = 1;
 let sweepIncrement = 0.001;
+let acttime = 0;
+let finaltime = 0;
 
 function setup() {
     cv = createCanvas(600, 600);
@@ -73,6 +75,7 @@ function InitObjects() {
     end = childx;
     path = [];
     stepCounterLimit = GetTotalSteps();
+    finaltime = stepCounterLimit;
     drawMe = true;
     animation = false;
     //drawMe = false;
@@ -81,27 +84,9 @@ function InitObjects() {
 
 function GetTotalSteps() {
 
-    let ir;
-    //let Child1ResolutionCalc = abs(OrbitResolution / end.getSumOfRevolutions() * sun.child.RevsAroundParent);
     let child2incrementsteps = abs(OrbitResolution * end.getSumOfRevolutions());
-
-    // if (child2incrementsteps > 40000) {
-    //     let adjustratio = 40000 / child2incrementsteps;
-    //     OrbitResolution = OrbitResolution * adjustratio;
-    //     lblInfo.innerHTML+="</br> Orbitresulution adjusted</br>";
-    //     if (OrbitResolution < 15) {
-    //         OrbitResolution = 15;
-    //     }
-    //     //ir = end.GetMyAngleIncr(OrbitResolution, end.RevsAroundParent);
-    // }
     child2incrementsteps = abs(OrbitResolution * end.getSumOfRevolutions());
-
-    // if (child2incrementsteps > 20000) {
-    //     child2incrementsteps = 20000;
-    // }
-
-    return child2incrementsteps;
-
+    return TWO_PI;
 }
 
 function ReadInputValues() {
@@ -127,7 +112,10 @@ function doubleClicked() {
     randomizeParams();
 }
 
-function randomizeParams(){
+function randomizeParams() {
+
+    GenerateRandomSpirographPattern(1.3 + sweep, 60);
+    InitObjects();
     param1 = random(0.7, 1.3);
     param2 = random(1.6, 6);
     param3 = random();
@@ -139,53 +127,58 @@ function randomizeParams(){
     for (let k = 0; k < 2; k++) {
         offsets_Inputs[k].value = 0;
     }
-    sweep=0.1;
+    sweep = 0.1;
 }
+
 function draw() {
 
-
     if (drawMe) {
-        const myStepLimit = 15000;
-        OrbitResolution = myStepLimit / end.getSumOfRevolutions();
+        const myEndOrbitStepLimit = 15000;
+        OrbitResolution = myEndOrbitStepLimit / end.getSumOfRevolutions();
         animresolution = map(AnimSpeedSlider.value, 1, 100, 10, 1);
-        // lblX.innerHTML = "sum of revs of end planet: " + end.getSumOfRevolutions();
-        // lblX.innerHTML += "</br> TotalSteps of end planet: " + OrbitResolution * end.getSumOfRevolutions();
-        GenerateRandomSpirographPattern(1.3 + sweep, 60);       
-        InitObjects();
+        lblX.innerHTML = "sum of revs of end planet: " + end.getSumOfRevolutions();
+        lblX.innerHTML += "</br> TotalSteps of end planet: " + OrbitResolution * end.getSumOfRevolutions();
+
         background(33);
-        CalcPath();
-        displayVertexShape();        
-        //drawMe = false;
+        CalcPath(finaltime);
+        displayVertexShape();
+        //drawMe = false;    
+        sweepIncrement = map(SweepSlider.value, 0, 100, -0.1, 0.1);
+        sweep += sweepIncrement;
+        acttime += sweepIncrement;
+        Orbit.prototype.time=acttime;
     }
 
-    sweepIncrement = map(SweepSlider.value, 0, 100, -0.0005, 0.0005);
-    sweep += sweepIncrement;
 
+
+    lblInfo.innerHTML = sun.time + "------path.length: " + path.length;
+    lblInfo.innerHTML = "</br> Orbitres: " + OrbitResolution;
     if (animation) {
         Animate();
         lblX.innerHTML += "</br> TotalSteps of end planet: " + OrbitResolution * end.getSumOfRevolutions();
     }
     // lblInfo.innerHTML = stepCounterLimit + "------path.length: " + path.length;
     // lblInfo.innerHTML += "</br> Orbitres: " + OrbitResolution;
-    // var ch1 = sun.child;
-    // while (ch1 != null) {
-    //    // lblInfo.innerHTML += "</br>AngleIncr: " + ch1.AngleIncr + "  Revs: " + ch1.RevsAroundParent + " _____n= " + ch1.n;
-    //     ch1 = ch1.child;
-    // }
-
+    var ch1 = sun.child;
+    while (ch1 != null) {
+        lblInfo.innerHTML += "</br> Revs: " + ch1.RevsAroundParent + " time= " + ch1.time;
+        lblInfo.innerHTML += "___Totalrevs: " + ch1.getSumOfRevolutions();
+        lblInfo.innerHTML += "</br> x " + ch1.x;
+        ch1 = ch1.child;
+    }
 }
 
-function CalcPath() {
+function CalcPath(time) {
 
-    for (let child1Steps = 0; child1Steps < stepCounterLimit; child1Steps += 1) {
-        var next = sun.child
-        while (next != null) {
-            next.update();
-            next = next.child;
-        }
-        path.push(createVector(end.x, end.y));
-        stepCounter++;
+    //   for (let child1Steps = 0; child1Steps < sun.time; child1Steps += 1) {
+    var next = sun.child
+    while (next != null) {
+        next.SetOrbitPosition();
+        next = next.child;
     }
+    path.push(createVector(end.x, end.y));
+    stepCounter++;
+    //  }
 }
 
 function Animate() {

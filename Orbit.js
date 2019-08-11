@@ -19,8 +19,8 @@ function Orbit(x_, y_, r_, p, r_offset_, revs_, n) {
         var newx = this.x; //+ this.r + newr;
         var newy = this.y + this.r;
         this.child = new Orbit(newx, newy, newr, this, childr_offset_, parseFloat(childrevs_), n + 1);
-        var inc = this.child.getSumOfRevolutions() / OrbitResolution / animresolution;
-        this.child.angleIncr = inc;
+        //var inc = this.child.getSumOfRevolutions() / OrbitResolution / animresolution;
+        //this.child.angleIncr = inc;
         //lblY.innerHTML = this.child.angleIncr;
 
         return this.child;
@@ -34,16 +34,24 @@ function Orbit(x_, y_, r_, p, r_offset_, revs_, n) {
         }
     }
 
-    this.update = function() {
+    // this.update = function() {
+    //     var parent = this.parent;
+    //     if (parent != null) {
+    //         this.angle += this.angleIncr;
+    //         var rsum = this.r + parent.r + this.r_offset;
+    //         this.x = parent.x + rsum * cos(this.angle);
+    //         this.y = parent.y + rsum * sin(this.angle);
+    //     }
+    // }
+
+    this.SetOrbitPosition = function() {
         var parent = this.parent;
-        if (parent != null) {
-            this.angle += this.angleIncr;
-            var rsum = this.r + parent.r + this.r_offset;
-            this.x = parent.x + rsum * cos(this.angle);
-            this.y = parent.y + rsum * sin(this.angle);
+        if (parent != null) {           
+            var rsum = this.r + parent.r + this.r_offset;            
+            this.x = parent.x + rsum * cos(this.time * this.getSumOfRevolutions());
+            this.y = parent.y + rsum * sin(this.time * this.getSumOfRevolutions());
         }
     }
-
     this.show = function() {
         stroke(255, 100);
         strokeWeight(1);
@@ -55,7 +63,7 @@ function Orbit(x_, y_, r_, p, r_offset_, revs_, n) {
         point(posx, posy);
     }
 }
-
+Orbit.prototype.time = 0;
 
 // Orbit.prototype.GetMyAngleIncr = function(res) {
 //     let incr = TWO_PI / res;
