@@ -15,9 +15,9 @@ var speedadjustfactor = 0.05;
 let cv;
 var sun;
 var end;
-var arr_radius = [100, 60, 25, 12, 2, 5, 10];
-var arr_revs = [1, 1, 3, 2, 2, 2, 2];
-var arr_radoffset = [0, 0, 0, 0, 0, 0, 0];
+var arr_radius = [100, 60, 10, 30, 2, 5, 10];
+var arr_revs = [1, 1, 4, 22, 1, 2, 2];
+var arr_radoffset = [0, 0, -27, 0, 0, 0, 0];
 let MaxStepsSlider;
 
 let animresolution;
