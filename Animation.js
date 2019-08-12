@@ -10,7 +10,7 @@ let myp5anim = new p5(function(s) {
     let OrbitResolution_Anim = 30;
     let pathresolution=0;
     let t = 0;
-    
+
     s.setup = () => {
         s.createCanvas(600, 600);
         InitObjects_Anim();
