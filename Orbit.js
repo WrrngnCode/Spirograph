@@ -12,6 +12,7 @@ function Orbit(x_, y_, r_, p, r_offset_, revs_, n) {
     this.angleIncr = 0;
     this.speed = 0; // (radians(pow(k, n - 1))) / resolution;
     this.angle = -PI / 2;
+    this.startAngle = -PI / 2;
     this.n = n;
 
     this.addChild = function(childradius_, childr_offset_, childrevs_) {
@@ -30,12 +31,12 @@ function Orbit(x_, y_, r_, p, r_offset_, revs_, n) {
         }
     }
 
-    this.SetOrbitPosition = function() {
+    this.SetOrbitPosition = function(acttime) {
         var parent = this.parent;
-        if (parent != null) {           
-            var rsum = this.r + parent.r + this.r_offset;            
-            this.x = parent.x + rsum * cos(this.time * this.getSumOfRevolutions());
-            this.y = parent.y + rsum * sin(this.time * this.getSumOfRevolutions());
+        if (parent != null) {
+            var rsum = this.r + parent.r + this.r_offset;
+            this.x = parent.x + rsum * cos(acttime * this.getSumOfRevolutions() + this.startAngle);
+            this.y = parent.y + rsum * sin(acttime * this.getSumOfRevolutions() + this.startAngle);
         }
     }
     this.show = function() {
@@ -48,5 +49,17 @@ function Orbit(x_, y_, r_, p, r_offset_, revs_, n) {
         strokeWeight(5);
         point(posx, posy);
     }
+
+    this.show_2 = function(sketch) {
+        sketch.stroke(255, 100);
+        sketch.strokeWeight(1);
+        sketch.noFill();
+        sketch.ellipse(this.x, this.y, this.r * 2, this.r * 2);
+        var posx = this.x + this.r * cos(this.angle);
+        var posy = this.y + this.r * sin(this.angle);
+        sketch.strokeWeight(5);
+        sketch.point(posx, posy);
+    }
+
+
 }
-Orbit.prototype.time = 0;

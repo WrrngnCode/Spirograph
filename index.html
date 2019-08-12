@@ -10,6 +10,7 @@
     <script src="./libraries/p5.dom.js"></script>
     <script src="patterns.js"></script>
     <script src="Spirograph2.js"></script>
+    <script src="Animation.js"></script>
     <script src="Orbit.js"></script>
     <style>
         body {
@@ -54,25 +55,20 @@
         max="100"></br>
     </input> Radius offset2: <input id="offset2Input" style="width:400px" type="range" value="0" step="1" min="-130"
         max="130"></input>
-    </br>
-     Smooothness <input id="MaxStepsSlider" style="width:400px" type="range" value="65" min="1" step="1"
-        max="100" width="400px"></input></br>
+    </br> Smooothness <input id="MaxStepsSlider" style="width:400px" type="range" value="65" min="1" step="1" max="100"
+        width="400px"></input></br>
     </br>
     <div id="pnl1222">
-        <div id="Panel1">
-             Rounds:<input id="rev1Input" type="number" value="1" step="0.1"></input>
-            Radius:<input id="radius1Input" type="number" value="1" step="5"></input>
+        <div id="Panel1"> Rounds:<input id="rev1Input" type="number" value="1" step="0.1"></input> Radius:<input
+                id="radius1Input" type="number" value="1" step="5"></input>
         </div>
-        <div id="Panel2">
-             Rounds:<input id="rev2Input" type="number" value="2" step="0.1">
+        <div id="Panel2"> Rounds:<input id="rev2Input" type="number" value="2" step="0.1">
             </input> Radius:<input id="radius2Input" type="number" value="30" step="5"></input>
         </div>
-        <div id="Panel3">
-            Rounds:<input id="rev3Input" type="number" value="2" step="0.1">
+        <div id="Panel3"> Rounds:<input id="rev3Input" type="number" value="2" step="0.1">
             </input> Radius:<input id="radius3Input" type="number" value="30" step="5"></input>
         </div>
-        <div id="Panel4">
-             Rounds:<input id="rev4Input" type="number" value="2" step="0.1">
+        <div id="Panel4"> Rounds:<input id="rev4Input" type="number" value="2" step="0.1">
             </input> Radius:<input id="radius4Input" type="number" value="30" step="5"></input>
         </div>
         <div id="hiddenpanel1" style="visibility: hidden">
@@ -86,6 +82,7 @@
                 max="130"></input>
         </div>
     </div>
+    <p id="lblAnimDebug">lblAnimDebug</p>
 </body>
 
 </html>

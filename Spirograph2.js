@@ -2,13 +2,13 @@
 // Fractal Spirograph
 // Video: https://youtu.be/0dwJ-bkJwDI
 /// <reference path="./node_modules/@types/p5/global.d.ts" />
+/// <reference path="Orbit.js" />
 var path = [];
 var SunTotalRevs = 3;
 var angle = 0;
 var stepCounter = 0;
 var stepCounterLimit = 0;
 var drawMe = false;
-var animation = false;
 var finalTimeLimit = 0;
 var OrbitResolution = 50;
 var speedadjustfactor = 0.05;
@@ -19,7 +19,6 @@ var arr_radius = [100, 60, 10, 30, 2, 5, 10];
 var arr_revs = [1, 1, 4, 22, 1, 2, 2];
 var arr_radoffset = [0, 0, -27, 0, 0, 0, 0];
 let MaxStepsSlider;
-
 let animresolution;
 var revs_Inputs = [];
 var radius_Inputs = [];
@@ -87,7 +86,8 @@ function InitObjects() {
     path = [];
     stepCounter = 0;
     drawMe = true;
-    animation = false;
+   
+    ResetAnimation=true;
     //drawMe = false;
     //animation = true;
 }
@@ -103,9 +103,6 @@ function keyPressed() {
 }
 
 function randomizeParams() {
-
-
-
     GenerateRandomSpirographPattern(1, 65);
 
     for (let k = 0; k < ChildrenCount; k++) {
@@ -127,11 +124,9 @@ function GetOptimalTimeResolution(startRes, MaxAllowedSteps = 35000) {
     OrbitResolution = startRes;
 
     if (calculatedSteps > MaxAllowedSteps) {
-
         timeres = finalTimeLimit / MaxAllowedSteps;
         OrbitResolution = Math.abs(TWO_PI / (timeres * end.getSumOfRevolutions()));
         return timeres;
-
     } else {
         return timeres;
     }
@@ -180,44 +175,15 @@ function draw() {
 function CalcPath(finaltime, res) {
     let max = finaltime + res
     for (let acttime = 0; acttime <= max; acttime += res) {
-        Orbit.prototype.time = acttime;
         var next = sun.child
         while (next != null) {
-            next.SetOrbitPosition();
+            next.SetOrbitPosition(acttime);
             next = next.child;
         }
         path.push(createVector(end.x, end.y));
         stepCounter++;
     }
 }
-
-// function Animate() {
-
-//     background(51);
-//     let fastStep = 1 / end.angleIncr;
-//     let slowStep = 0.01 / end.angleIncr;
-
-//    // animresolution = map(AnimSpeedSlider.value, 0, 100, slowStep, fastStep);
-
-//     for (var i = 0; i < animresolution; i++) {
-//         var next = sun;
-//         while (next != null) {
-//             next.update();
-//             next = next.child;
-//         }
-//         path.push(createVector(end.x, end.y));
-//     }
-//     var next = sun;
-//     while (next != null) {
-//         next.show();
-//         next = next.child;
-//     }
-
-//     displayVertexShape();
-//     if (path.length > stepCounterLimit) {
-//         animation = false;
-//     }
-// }
 
 function displayVertexShape() {
     strokeWeight(2);
@@ -238,6 +204,7 @@ function ReadInputValues() {
         arr_radius[k + 1] = radius_Inputs[k].value;
     }
     InitObjects();
+
 };
 
 function AddMyOnInputEventHandler(myHtmlElement, myArray, myIndex, WriteBackValue, displayingelement) {
@@ -268,7 +235,7 @@ function AddMyOnWheelEventHandler(myHtmlElement, incr, myArray, myIndex, WriteBa
             }
             //console.log("onwheel " + myHtmlElement.id)
         }
-       myHtmlElement.oninput();
+        myHtmlElement.oninput();
 
     };
 }
