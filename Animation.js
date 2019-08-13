@@ -1,6 +1,7 @@
 /// <reference path="Orbit.js" />
 let ResetAnimation;
 let myp5anim = new p5(function(s) {
+    let Canvas2;
     let lblAnimDebug;
     let path2 = [];
     let sun2;
@@ -9,12 +10,15 @@ let myp5anim = new p5(function(s) {
     let Anim_FinalTimeLimit;
     let OrbitResolution_Anim = 30;
     let pathresolution=0;
+    let AnimationSpeed;
     let t = 0;
 
     s.setup = () => {
-        s.createCanvas(600, 600);
+        Canvas2=s.createCanvas(600, 600);
+        Canvas2.parent("sketch-div2");
         InitObjects_Anim();
         lblAnimDebug = document.getElementById("lblAnimDebug");
+        AnimationSpeed=document.getElementById("AnimationSpeed");
     };
 
     s.draw = () => {
@@ -31,16 +35,18 @@ let myp5anim = new p5(function(s) {
         displayVertexShape2(s);
 
 
-        t += 0.001;
+        t += t_incr;
         if (t > Anim_FinalTimeLimit) {
             t = 0;
         }
         path2 = [];
+
+        t_incr=map(AnimationSpeed.value,0,100,pathresolution/60,pathresolution*5);
+        lblAnimDebug.innerHTML += "<br>t_incr: " + t_incr;
+        lblAnimDebug.innerHTML += "<br>FrameCount: " + frameCount;
     };
 
-    function GetAnimationPath(ActTimeLimit) {
-
-        
+    function GetAnimationPath(ActTimeLimit) {        
 
         lblAnimDebug.innerHTML = "Pathresolution: " + pathresolution;
         lblAnimDebug.innerHTML += "</br> ActTimeLimit: " + ActTimeLimit;
@@ -80,10 +86,9 @@ let myp5anim = new p5(function(s) {
             childx = childx.addChild(arr_radius[i], arr_radoffset[i], arr_revs[i]);
         }
         end2 = childx;
-        path2 = [];
-        AnimationEnabled = true;
+        path2 = [];        
         Anim_FinalTimeLimit = Math.abs(sun2.child.RevsAroundParent * TWO_PI); //this is where the animation will end.
-        pathresolution = GetOptimalPathResolution_Anim(30, 15000, Anim_FinalTimeLimit);
+        pathresolution = GetOptimalPathResolution_Anim(30, 15000);
     }
 
 
@@ -98,14 +103,14 @@ let myp5anim = new p5(function(s) {
         sketch.endShape();
     }
 
-    function GetOptimalPathResolution_Anim(startRes, MaxAllowedSteps = 35000) {
+    function GetOptimalPathResolution_Anim(startOrbitRes, MaxAllowedSteps = 35000) {
         //MaxAllowedSteps of the "end" orbit
         //startres= how many steps the end orbit should make for one full revoulution (50)
         //timeres*end2.getSumOfRevolutions()=TWO_Pi/startres >> because the end orbit turns faster. Rearranged:
-        let pathres = Math.abs(TWO_PI / (startRes * end2.getSumOfRevolutions()));
+        let pathres = Math.abs(TWO_PI / (startOrbitRes * end2.getSumOfRevolutions()));
 
         let calculatedSteps = Anim_FinalTimeLimit / pathres;
-        OrbitResolution_Anim = startRes;
+        OrbitResolution_Anim = startOrbitRes;
 
         if (calculatedSteps > MaxAllowedSteps) {
             pathres = finalTimeLimit / MaxAllowedSteps;
