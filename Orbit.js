@@ -59,7 +59,7 @@ function Orbit(x_, y_, r_, p, r_offset_, revs_, n) {
         if (this.parent!=null){
             var posx = this.x + this.r * cos(this.angle);
             var posy = this.y + this.r * sin(this.angle);
-            sketch.strokeWeight(6);
+            sketch.strokeWeight(5);
             sketch.stroke(255,0,0);
             sketch.point(posx, posy);
         }

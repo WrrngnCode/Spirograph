@@ -21,6 +21,7 @@ let myp5anim = new p5(function(s) {
         InitObjects_Anim();
         lblAnimDebug = document.getElementById("lblAnimDebug");
         AnimationSpeed = document.getElementById("AnimationSpeed");
+        AddMyOnWheelEventHandler(AnimationSpeed,1,null,null,null,null);
     };
 
     s.draw = () => {
