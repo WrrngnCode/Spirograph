@@ -37,6 +37,7 @@ function Orbit(x_, y_, r_, p, r_offset_, revs_, n) {
             var rsum = this.r + parent.r + this.r_offset;
             this.x = parent.x + rsum * cos(acttime * this.getSumOfRevolutions() + this.startAngle);
             this.y = parent.y + rsum * sin(acttime * this.getSumOfRevolutions() + this.startAngle);
+            this.angle=acttime * this.getSumOfRevolutions() + this.startAngle
         }
     }
     this.show = function() {
@@ -51,14 +52,17 @@ function Orbit(x_, y_, r_, p, r_offset_, revs_, n) {
     }
 
     this.show_2 = function(sketch) {
-        sketch.stroke(255, 100);
-        sketch.strokeWeight(1);
+        sketch.stroke(255);
+        sketch.strokeWeight(2);
         sketch.noFill();
         sketch.ellipse(this.x, this.y, this.r * 2, this.r * 2);
-        var posx = this.x + this.r * cos(this.angle);
-        var posy = this.y + this.r * sin(this.angle);
-        sketch.strokeWeight(5);
-        sketch.point(posx, posy);
+        if (this.parent!=null){
+            var posx = this.x + this.r * cos(this.angle);
+            var posy = this.y + this.r * sin(this.angle);
+            sketch.strokeWeight(6);
+            sketch.stroke(255,0,0);
+            sketch.point(posx, posy);
+        }
     }
 
 

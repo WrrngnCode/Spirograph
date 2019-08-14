@@ -26,8 +26,6 @@ function GenerateRandomSpirographPattern(q, r) {
         arr_radius[ChildrenCount]=2;
     }
 
-
-    
     //arr_revs[3] = 2;f
     //console.log(arr_revs);
     // } while (abs(arr_revs.reduce((pv, cv, i) => {
