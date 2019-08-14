@@ -97,7 +97,7 @@ function keyPressed(e) {
     if ((key == "f" || key == "F") && keyCode !== 102) {
         randomizeParams(1);
     }
-    if ((key == "g" || key == "G" && e.keyCode!=189 )) {
+    if ((key == "g" || key == "G" && e.keyCode!=189 && e.keyCode!=109 )) {
         //console.log(key);
         randomizeParams(2);
     }
