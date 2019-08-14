@@ -91,20 +91,21 @@ function InitObjects() {
     //animation = true;
 }
 
-function keyPressed() {
-
+function keyPressed(e) {
+    console.log(e);
+    
     if ((key == "f" || key == "F") && keyCode !== 102) {
         randomizeParams(1);
     }
-    if ((key == "g" || key == "G")) {
-
+    if ((key == "g" || key == "G" && e.keyCode!=189 )) {
+        console.log(key);
         randomizeParams(2);
 
     }
 }
 
-function randomizeParams(sw) {
-
+function randomizeParams(sw = 1) {
+    console.log(sw);
     if (sw == 1) {
         GenerateRandomSpirographPattern(1, 65);
     }
@@ -209,6 +210,9 @@ function ReadInputValues() {
         arr_radoffset[k + 1] = offsets_Inputs[k].value;
         arr_radius[k + 1] = radius_Inputs[k].value;
     }
+    // console.log(arr_revs);
+    // console.log(arr_radoffset);
+    // console.log(arr_radius);
     InitObjects();
 
 };
