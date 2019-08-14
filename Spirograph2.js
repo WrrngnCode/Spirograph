@@ -86,34 +86,29 @@ function InitObjects() {
     path = [];
     stepCounter = 0;
     drawMe = true;
-
     ResetAnimation = true;
     //drawMe = false;
     //animation = true;
 }
-
-
-
 
 function keyPressed() {
 
     if ((key == "f" || key == "F") && keyCode !== 102) {
         randomizeParams(1);
     }
-    if ((key == "g" || key == "G") && keyCode !== 103) {
+    if ((key == "g" || key == "G")) {
+
         randomizeParams(2);
-       
+
     }
-
-
 }
 
-function randomizeParams(sw){
-    
-    if (sw==1) {       
+function randomizeParams(sw) {
+
+    if (sw == 1) {
         GenerateRandomSpirographPattern(1, 65);
     }
-    if (sw==2) {       
+    if (sw == 2) {
         GenerateTotallyRandomSpirographPattern();
     }
     for (let k = 0; k < ChildrenCount; k++) {
