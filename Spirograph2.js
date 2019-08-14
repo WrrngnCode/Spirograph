@@ -92,20 +92,19 @@ function InitObjects() {
 }
 
 function keyPressed(e) {
-    console.log(e);
+   // console.log(e);
     
     if ((key == "f" || key == "F") && keyCode !== 102) {
         randomizeParams(1);
     }
     if ((key == "g" || key == "G" && e.keyCode!=189 )) {
-        console.log(key);
+        //console.log(key);
         randomizeParams(2);
-
     }
 }
 
 function randomizeParams(sw = 1) {
-    console.log(sw);
+    //console.log(sw);
     if (sw == 1) {
         GenerateRandomSpirographPattern(1, 65);
     }
