@@ -86,8 +86,8 @@ function InitObjects() {
     path = [];
     stepCounter = 0;
     drawMe = true;
-   
-    ResetAnimation=true;
+
+    ResetAnimation = true;
     //drawMe = false;
     //animation = true;
 }
@@ -98,13 +98,24 @@ function InitObjects() {
 function keyPressed() {
 
     if ((key == "f" || key == "F") && keyCode !== 102) {
-        randomizeParams();
+        randomizeParams(1);
     }
+    if ((key == "g" || key == "G") && keyCode !== 103) {
+        randomizeParams(2);
+       
+    }
+
+
 }
 
-function randomizeParams() {
-    GenerateRandomSpirographPattern(1, 65);
-
+function randomizeParams(sw){
+    
+    if (sw==1) {       
+        GenerateRandomSpirographPattern(1, 65);
+    }
+    if (sw==2) {       
+        GenerateTotallyRandomSpirographPattern();
+    }
     for (let k = 0; k < ChildrenCount; k++) {
         offsets_Inputs[k].value = arr_radoffset[k + 1];
         radius_Inputs[k].value = arr_radius[k + 1];
